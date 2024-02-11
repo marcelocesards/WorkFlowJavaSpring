@@ -4,7 +4,9 @@ import java.util.Map;
 
 import br.com.marcelocesar.WorkFlowJavaSpring.component.console.ConsoleNode;
 import br.com.marcelocesar.WorkFlowJavaSpring.component.httpRequest.HttpRequestNode;
+import lombok.ToString;
 
+@ToString
 public class NodeSteps {
     private Map<String, Object> map = new HashMap<>();
     
