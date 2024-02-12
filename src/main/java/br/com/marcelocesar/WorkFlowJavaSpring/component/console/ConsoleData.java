@@ -1,16 +1,12 @@
 package br.com.marcelocesar.WorkFlowJavaSpring.component.console;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ConsoleData {
     private String message;
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    public ConsoleData(String message){
-        this.message = message;
-    }
 }

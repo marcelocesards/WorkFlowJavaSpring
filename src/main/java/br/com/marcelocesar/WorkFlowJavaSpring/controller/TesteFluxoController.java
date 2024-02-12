@@ -20,7 +20,7 @@ public class TesteFluxoController {
         Context context = workflow.run(fromJson);
         String output = context.get("http_content");
         
-        System.out.println(output);    
+     //   System.out.println(output);    
 		return ResponseEntity.ok(fromJson);
 	}
 	@PostMapping("/executar2")

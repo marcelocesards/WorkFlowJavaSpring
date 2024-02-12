@@ -1,6 +1,5 @@
 package br.com.marcelocesar.WorkFlowJavaSpring.drawflow;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
@@ -17,8 +16,8 @@ public class Node {
     private String className;
     private String html;
     private String typenode;
-	private Map<String, NodeInput> inputs = new HashMap<>();   
-	private Map<String, NodeOutput> outputs = new HashMap<>();   
+    private Map<String, InputOutput> inputs;
+    private Map<String, InputOutput> outputs;
     private int posX;
     private int posY;
          

@@ -4,11 +4,11 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import br.com.marcelocesar.WorkFlowJavaSpring.drawflow.Connection;
 import br.com.marcelocesar.WorkFlowJavaSpring.drawflow.Flow;
 import br.com.marcelocesar.WorkFlowJavaSpring.drawflow.FlowPage;
+import br.com.marcelocesar.WorkFlowJavaSpring.drawflow.InputOutput;
 import br.com.marcelocesar.WorkFlowJavaSpring.drawflow.Node;
-import br.com.marcelocesar.WorkFlowJavaSpring.drawflow.NodeOutput;
-import br.com.marcelocesar.WorkFlowJavaSpring.drawflow.OutputConnection;
 
 public class NodeService {
     public static Node getStartNode(Flow flow){
@@ -31,13 +31,13 @@ public class NodeService {
         }
         return node;
     }
-    public static Node getNextNode(Flow flow, OutputConnection outputConnection){
+    public static Node getNextNode(Flow flow, Connection outputConnection){
         for (Map.Entry<String, FlowPage> entry : flow.getDrawflow().entrySet()) {
             FlowPage page = entry.getValue();
 
             for (Map.Entry<String, Node> nodeItem : page.getData().entrySet()) {
                 Node node = nodeItem.getValue();
-                if(node.getId() == outputConnection.getNode()){
+                if(node.getId().equals(outputConnection.getNode())){
                     return node;
                 }
             }
@@ -47,9 +47,9 @@ public class NodeService {
 
     public static Context setNextNode(Flow flow,Node node,Context context,String outputKey){
         if(node.getOutputs().size()>0){
-            NodeOutput output = node.getOutputs().get(outputKey);
-            if(output != null && output.getOutputs().size()>0){
-                context.put("NextNode", getNextNode(flow,output.getOutputs().get(0)));
+            InputOutput output = node.getOutputs().get(outputKey);
+            if(output != null && output.getConnections().size()>0){
+                context.put("NextNode", getNextNode(flow,output.getConnections().get(0)));
             }
         }
         return context;
