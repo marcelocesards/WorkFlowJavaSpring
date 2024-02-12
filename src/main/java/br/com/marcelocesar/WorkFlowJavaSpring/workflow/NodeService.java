@@ -12,10 +12,10 @@ import br.com.marcelocesar.WorkFlowJavaSpring.drawflow.OutputConnection;
 
 public class NodeService {
     public static Node getStartNode(Flow flow){
-        for (Map.Entry<String, FlowPage> entry : flow.getMap().entrySet()) {
+        for (Map.Entry<String, FlowPage> entry : flow.getDrawflow().entrySet()) {
             FlowPage page = entry.getValue();
 
-            for (Map.Entry<String, Node> nodeItem : page.getMap().entrySet()) {
+            for (Map.Entry<String, Node> nodeItem : page.getData().entrySet()) {
                 Node node = nodeItem.getValue();
                 if(node.getInputs().size() == 0){
                     return node;
@@ -32,10 +32,10 @@ public class NodeService {
         return node;
     }
     public static Node getNextNode(Flow flow, OutputConnection outputConnection){
-        for (Map.Entry<String, FlowPage> entry : flow.getMap().entrySet()) {
+        for (Map.Entry<String, FlowPage> entry : flow.getDrawflow().entrySet()) {
             FlowPage page = entry.getValue();
 
-            for (Map.Entry<String, Node> nodeItem : page.getMap().entrySet()) {
+            for (Map.Entry<String, Node> nodeItem : page.getData().entrySet()) {
                 Node node = nodeItem.getValue();
                 if(node.getId() == outputConnection.getNode()){
                     return node;

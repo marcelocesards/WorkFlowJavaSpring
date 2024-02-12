@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.marcelocesar.WorkFlowJavaSpring.drawflow.Flow;
 import br.com.marcelocesar.WorkFlowJavaSpring.drawflow.Node;
@@ -17,7 +20,9 @@ public class HttpRequestNode implements Step{
 
     @Override
     public Context process(Flow flow, Node node, Context context) {
-        HttpRequestData data = node.getData();
+    	Map<String, Object> datateste =  node.getData();
+    	ObjectMapper mapper = new ObjectMapper();
+    	HttpRequestData data = mapper.convertValue(datateste, HttpRequestData.class);
         URL url;
         try {
             url = new URL(data.getUrl());
