@@ -1,5 +1,6 @@
 package br.com.marcelocesar.WorkFlowJavaSpring;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,13 +8,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.assertj.core.api.Assert;
 import org.assertj.core.api.Assertions;
+import org.jboss.jandex.AnnotationInstance;
+import org.jboss.jandex.AnnotationTarget;
+import org.jboss.jandex.DotName;
+import org.jboss.jandex.Index;
+import org.jboss.jandex.IndexReader;
 import org.junit.jupiter.api.Test;
 import org.reflections.Reflections;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.io.Resource;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 import br.com.marcelocesar.WorkFlowJavaSpring.annotation.SampleAnnotation;
@@ -74,5 +83,36 @@ public class TestAnnotation {
 				  .collect(Collectors.toList());
 				Assertions.assertThat(annotatedClasses.size()).isEqualTo(1);
 				Assertions.assertThat(annotatedClasses.get(0)).isEqualTo("SampleAnnotatedClass");	
+	}
+	
+    @Value("classpath:META-INF/jandex.idx")
+    private Resource appFile;
+    
+	@Test
+	public void testAnnotatedClassesWithoutBasePackage() throws ClassNotFoundException, IOException {
+		IndexReader reader = new IndexReader(appFile.getInputStream());
+		Index jandexFile = reader.read();
+		List<AnnotationInstance> appAnnotationList = jandexFile
+		  .getAnnotations(DotName
+		  .createSimple("br.com.marcelocesar.WorkFlowJavaSpring.annotation.SampleAnnotation"));
+
+		List<String> annotatedMethods = new ArrayList<>();
+		List<String> annotatedClasses = new ArrayList<>();
+		for (AnnotationInstance annotationInstance : appAnnotationList) {
+		    if (annotationInstance.target().kind() == AnnotationTarget.Kind.METHOD) {
+		        annotatedMethods.add(annotationInstance.value("name")
+		          .value()
+		          .toString());
+		    }
+		    if (annotationInstance.target().kind() == AnnotationTarget.Kind.CLASS) {
+		        annotatedClasses.add(annotationInstance.value("name")
+		          .value()
+		          .toString());
+		    }
+		}
+		Assertions.assertThat(annotatedMethods.size()).isEqualTo(1);
+		Assertions.assertThat(annotatedMethods.get(0)).isEqualTo("annotatedMethod");	
+		Assertions.assertThat(annotatedClasses.size()).isEqualTo(1);
+		Assertions.assertThat(annotatedClasses.get(0)).isEqualTo("SampleAnnotatedClass");	
 	}
 }
