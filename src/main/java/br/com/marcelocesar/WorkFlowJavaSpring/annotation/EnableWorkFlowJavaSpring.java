@@ -5,8 +5,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ ElementType.TYPE, ElementType.METHOD })
+import org.springframework.context.annotation.Import;
+
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Step {
-    String value() default "";
+@Target(ElementType.TYPE)
+@Import(WorkFlowJavaSpringApplicationConfiguration.class)
+public @interface EnableWorkFlowJavaSpring {
+
 }
