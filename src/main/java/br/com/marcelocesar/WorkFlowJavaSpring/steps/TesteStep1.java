@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import br.com.marcelocesar.WorkFlowJavaSpring.annotation.Step;
 
 @Component
-@Step("TesteStep1")
+@Step()
 public class TesteStep1 {
 
 }

@@ -1,13 +1,19 @@
 package br.com.marcelocesar.WorkFlowJavaSpring.workflow;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import br.com.marcelocesar.WorkFlowJavaSpring.drawflow.Flow;
 import br.com.marcelocesar.WorkFlowJavaSpring.drawflow.Node;
 
+@Component
 public class Workflow {
+	
+	@Autowired
     private NodeSteps nodeSteps;
+	
     public Workflow(){
-        nodeSteps = new NodeSteps();
     }
 
     public Context run(Flow flow){

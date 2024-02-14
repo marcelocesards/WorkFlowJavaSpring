@@ -15,7 +15,6 @@ public class StepScannerComponent {
 	private StepAnnotatinInstanceComponent stepAnnotatinInstanceComponent;
 	
 	public Map<String, Object> getAllSteps() throws IOException {
-		List<Object> beansWithStepAnnotation = stepAnnotatinInstanceComponent.findBeansWithStepAnnotation();
 		return stepAnnotatinInstanceComponent.getStepBeans();
 	}
 }
