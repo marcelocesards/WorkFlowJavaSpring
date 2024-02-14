@@ -21,13 +21,15 @@ public class Workflow {
         context.put("Flow", flow);
         return processNext(flow, context);
     }
-    public Context run(Flow flow, Map<String,String> input){
+    
+    public Context run(Flow flow, Map<String,Object> input){
         Context context = new Context();
         context.put("Flow", flow);
         input.forEach((key,value)-> context.put(key, value));
         
         return processNext(flow, context);
     }
+    
     private Context processNext(Flow flow, Context context){
         Node node = NodeService.getStartNode(flow);
         

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import br.com.marcelocesar.WorkFlowJavaSpring.annotation.Step;
 import br.com.marcelocesar.WorkFlowJavaSpring.component.httpRequest.BeanStep;
 
-@Component
+//@Component
 public class StepAnnotatinInstanceComponent {	
 
 	@Autowired
